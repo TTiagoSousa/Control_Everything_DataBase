@@ -15,7 +15,7 @@ model User {
   country           String
   email             String              @unique
   hashedPassword    String
-  dateOfBirth       DateTime
+  dateOfBirth       String
   isPaidUser        Boolean             @default(false)
   gender            Gender              @default(UNKNOWN)
   role              UserRole            @default(NOT_PAID)
