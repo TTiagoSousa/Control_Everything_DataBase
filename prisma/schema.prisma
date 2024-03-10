@@ -32,3 +32,24 @@ enum UserRole {
   NOT_PAID
   PAID
 }
+
+model Employee {
+  id                String              @id @unique @default(uuid())
+  isActive          Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  fullName          String
+  country           String
+  email             String              @unique
+  hashedPassword    String
+  dateOfBirth       DateTime
+  employeeNumber    Int                 @unique
+  jobTitle          EmployeeRole        @default(NOT_ASSIGNED)
+  gender            Gender              @default(UNKNOWN)
+}
+
+enum EmployeeRole {
+  ADMIN
+  PROGRAMMER
+  CUSTOMER_SUPPORT
+  NOT_ASSIGNED
+}
