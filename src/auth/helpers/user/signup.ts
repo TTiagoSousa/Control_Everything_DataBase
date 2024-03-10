@@ -7,6 +7,7 @@ import { isValidEmail } from "../../../utils/email/is.valide.email";
 import { validDate } from "src/utils/date/date.validation";
 import { isStrongPassword } from "src/utils/password/is.password.strong";
 import { containsOnlyLetters } from "src/utils/text/contains.only.letters";
+import { GetCountriesFromDataBase } from "src/countries/helpers/get.countries.from.database";
 
 export async function signup_User (
   dto: signup_dto,
@@ -29,6 +30,13 @@ export async function signup_User (
     throw new BadRequestException('Invalid email')
   }
 
+  const coutries = await GetCountriesFromDataBase();
+  const requestedCountry = coutries.find(c => c.countryNameEn === dto.country);
+
+  if (!requestedCountry) {
+    throw new BadRequestException('Invalid country')
+  }
+
   if (password !== confirmPassword) {
     throw new BadRequestException('Password and confirm password must be de same');
   }
@@ -44,10 +52,6 @@ export async function signup_User (
 
   if(!containsOnlyLetters(capitalizedFullName)) {
     throw new BadRequestException('Full name must contain only letters');
-  }
-
-  if(!containsOnlyLetters(country)) {
-    throw new BadRequestException('Country must contain only letters');
   }
 
   const validGenders: string[] = Object.values(Gender) as string[];

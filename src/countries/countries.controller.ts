@@ -24,8 +24,8 @@ export class CountriesController {
   }
 
   @Get('get-coutries-from-database')
-  async GetCoutriesFromDataBase() {
-    const countries = await this.countriesService.GetCoutriesFromDataBase();
+  async GetCountriesFromDataBase() {
+    const countries = await this.countriesService.GetCountriesFromDataBase();
     return countries;
   }
 }

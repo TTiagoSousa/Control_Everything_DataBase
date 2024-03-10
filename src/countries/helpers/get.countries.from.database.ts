@@ -1,6 +1,6 @@
 import { PrismaCountriesRepository } from '../repositories/prisma/prisma-countries-repository';
 
-export async function GetCoutriesFromDataBase() {
+export async function GetCountriesFromDataBase() {
 
   const countriesRepository = new PrismaCountriesRepository();
 
