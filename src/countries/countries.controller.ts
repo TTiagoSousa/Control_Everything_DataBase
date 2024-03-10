@@ -23,4 +23,9 @@ export class CountriesController {
     return { message: 'Update done successfully' };
   }
 
+  @Get('get-coutries-from-database')
+  async GetCoutriesFromDataBase() {
+    const countries = await this.countriesService.GetCoutriesFromDataBase();
+    return countries;
+  }
 }
