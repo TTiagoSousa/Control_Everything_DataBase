@@ -21,7 +21,7 @@ export async function updateOrUploadCountriesToDatabase() {
 
     // Processar cada país
     const countries = countriesData.map((country: any) => ({
-      nameEn: country.name.official, // Nome oficial em inglês
+      nameEn: country.name.common, // Nome oficial em inglês
       namePt: country.translations.por.common, // Nome comum em português
       flag: country.flags[1],
     }));

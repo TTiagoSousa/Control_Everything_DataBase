@@ -16,8 +16,7 @@ export class CountriesController {
   }
 
   @Post('upload-update-countries')
-  @UseGuards(JwtAuthGuard, EmployeeRolesGuard)
-  @Roles(EmployeeRole.ADMIN)
+
   async updateOrUploadCountriesToDatabase() {
     await this.countriesService.updateOrUploadCountriesToDatabase();
     return { message: 'Update done successfully' };
