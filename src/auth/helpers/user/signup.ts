@@ -4,7 +4,6 @@ import { Gender } from "@prisma/client";
 import { hashPassword } from "../../../utils/password/hashPassword";
 import { BadRequestException } from "@nestjs/common";
 import { isValidEmail } from "../../../utils/email/is.valide.email";
-import { validDate } from "src/utils/date/date.validation";
 import { isStrongPassword } from "src/utils/password/is.password.strong";
 import { containsOnlyLetters } from "src/utils/text/contains.only.letters";
 import { GetCountriesFromDataBase } from "src/countries/helpers/get.countries.from.database";
@@ -48,9 +47,7 @@ export async function signup_User (
     throw new BadRequestException('Password and confirm password must be de same');
   }
 
-  if (!validDate(dateOfBirth)) {
-    throw new BadRequestException('Invalid date of birth. Please use the format DD/MM/YY');
-  }
+  const isoDateOfBirth = new Date(dateOfBirth).toISOString();
 
   const capitalizedFullName = fullName
   .split(' ')
@@ -73,7 +70,7 @@ export async function signup_User (
   const creationResult = await usersRepository.create({
     email: email,
     fullName: capitalizedFullName,
-    dateOfBirth,
+    dateOfBirth: isoDateOfBirth,
     country,
     hashedPassword: hashedPassword,
     gender: gender.toUpperCase() as Gender,

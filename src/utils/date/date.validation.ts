@@ -1,11 +1,30 @@
-export function validDate(date: string): boolean {
-  const regex = /^\d{2}\/\d{2}\/\d{2}(\d{2})?$/;
-  if (!regex.test(date)) return false;
+import { z } from "zod";
 
-  const [day, month, year] = date.split('/').map(Number);
-  const parsedDate = new Date(year < 100 ? year + 2000 : year, month - 1, day);
+export function isValidDate(str: string): boolean {
+  const stringSchema = z.string();
 
-  return parsedDate.getDate() === day &&
-         parsedDate.getMonth() === month - 1 &&
-         parsedDate.getFullYear() === (year < 100 ? year + 2000 : year);
+  const zodResult = stringSchema.safeParse(str);
+
+  if (!zodResult.success) {
+    return false;
+  }
+
+  // Regex for date format DD-MM-YYYY
+  const regex = /^\d{2}-\d{2}-\d{4}$/;
+
+  if (!regex.test(str)) {
+    return false;
+  }
+
+  // Extract day, month, and year parts
+  const [day, month, year] = str.split("-").map(Number);
+
+  // Check if it's a valid date
+  const date = new Date(year, month - 1, day);
+
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() + 1 === month &&
+    date.getDate() === day
+  );
 }
