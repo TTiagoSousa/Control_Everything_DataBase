@@ -6,6 +6,9 @@ import { signin_Employee } from './helpers/employee/signin';
 import { JwtService } from '@nestjs/jwt';
 import { activateAccount_User } from './helpers/user/activate.account';
 import { EmailService } from 'src/email/email.service';
+import { signin_User } from './helpers/user/signin';
+import { signin_dto } from 'src/user/dto/signin.dto';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -28,4 +31,8 @@ export class AuthService {
     return result;
   }
 
+  async signin_User(dto: signin_dto, req, res) {
+    const result = await signin_User(dto, this.jwt, req, res);
+    return result;
+  }
 }

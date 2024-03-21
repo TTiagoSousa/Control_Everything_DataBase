@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Res, Req, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res, Req, } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { signup_dto } from 'src/user/dto/signup.dto';
 import { signin_employee_dto } from 'src/employee/dto/signin.employee.dto';
+import { signin_dto } from 'src/user/dto/signin.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -26,4 +27,11 @@ export class AuthController {
 
     return
   }
+
+  @Post('signin_user')
+  async signin_User(@Body() dto: signin_dto, @Req() req, @Res() res) {
+
+    return this.authService.signin_User(dto, req, res);
+  }
+
 }
