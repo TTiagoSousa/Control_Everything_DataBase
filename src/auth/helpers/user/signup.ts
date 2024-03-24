@@ -9,7 +9,7 @@ import { containsOnlyLetters } from "src/utils/text/contains.only.letters";
 import { GetCountriesFromDataBase } from "src/countries/helpers/get.countries.from.database";
 import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/email/email.service';
-import { sendActivationEmail } from "./send.activation.email";
+import { sendActivationEmail } from "./email/send.activation.email";
 
 export async function signup_User (
   dto: signup_dto,
