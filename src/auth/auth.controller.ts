@@ -34,4 +34,11 @@ export class AuthController {
     return this.authService.signin_User(dto, req, res);
   }
 
+  @Post('send-email-to-reset-password')
+  async sendPasswordResetEmail(@Body('email') email: string) {
+
+   await this.authService.sendResetPasswordEmail(email)
+
+    return;
+  }
 }
