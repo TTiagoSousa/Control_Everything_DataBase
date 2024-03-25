@@ -9,6 +9,7 @@ import { EmailService } from 'src/email/email.service';
 import { signin_User } from './helpers/user/signin';
 import { signin_dto } from 'src/user/dto/signin.dto';
 import { sendResetPasswordEmail } from './helpers/user/email/send.reset.password.email';
+import { resetPassword } from './helpers/user/reset.password';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +40,11 @@ export class AuthService {
 
   async sendResetPasswordEmail(email: string) {
     const result  = await sendResetPasswordEmail(email, this.emailService, this.jwt);
+    return result;
+  }
+
+  async resetPassword( newPassword: string, token: string) {
+    const result  = await resetPassword(this.jwt, newPassword, token);
     return result;
   }
 }
