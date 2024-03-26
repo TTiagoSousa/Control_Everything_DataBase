@@ -41,4 +41,10 @@ export class PrismaCurrencyRepository implements CurrencyRepository{
 
     return currencyCode;
   }
+
+  async findAll(){
+    const currencies = await prisma.currency.findMany();
+
+    return currencies;
+  }
 }
