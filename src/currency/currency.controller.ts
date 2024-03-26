@@ -14,6 +14,12 @@ export class CurrencyController {
   @Roles(EmployeeRole.ADMIN)
   async createCurrency() {
     const updatedCurrencies = await this.currencyService.uploadCurrencies();
-    return { message: 'Moeda(s) inserida(s) com sucesso', updatedCurrencies };
+    return { updatedCurrencies };
+  }
+
+  @Post('update-currencies-rate')
+  async updateCurrenciesRate() {
+    const updateCurrenciesRate = await this.currencyService.updateCurrenciesRate();
+    return { updateCurrenciesRate };
   }
 }

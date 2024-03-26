@@ -18,4 +18,27 @@ export class PrismaCurrencyRepository implements CurrencyRepository{
     return deleteInfo;
   }
 
+  async updateRate(id: string, rate: string) {
+    const numericRate = parseFloat(rate); // Converter a string para um número
+    const currency = await prisma.currency.update({
+      where: {
+        id,
+      },
+      data: {
+        rate: numericRate,
+      },
+    });
+  
+    return currency;
+  }
+
+  async findByCode(code: string) {
+    const currencyCode = await prisma.currency.findUnique({
+      where: {
+        code
+      },
+    });
+
+    return currencyCode;
+  }
 }
