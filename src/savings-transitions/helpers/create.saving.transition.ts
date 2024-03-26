@@ -4,6 +4,7 @@ import { BadGatewayException } from "@nestjs/common";
 import { containsOnlyLettersAndNumbers } from "src/utils/text/contains.only.letters.and.numbers";
 import { isValidHour } from "src/utils/hour/is.valid.hour";
 import { isValidDate } from "src/utils/date/date.validation";
+import { validateCurrencyByCode } from "src/utils/currency/validate.currency";
 
 export async function CreateSavingTransition (
   dto: createSavingTransition_dto,
@@ -37,6 +38,10 @@ export async function CreateSavingTransition (
 
   if(!isValidDate(data)) {
     throw new BadGatewayException('Invalid data')
+  }
+
+  if (!await validateCurrencyByCode(currencyType)) {
+    throw new BadGatewayException('Invalid currency type');
   }
 
   const savingTransition = await SavingsTransitionRepository.create({
