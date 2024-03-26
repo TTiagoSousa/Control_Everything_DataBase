@@ -19,6 +19,7 @@ model User {
   isPaidUser        Boolean             @default(false)
   gender            Gender              @default(UNKNOWN)
   role              UserRole            @default(NOT_PAID)
+  SavingTransition  SavingsTransitions[]  @relation("CreatedBy")
 } 
 
 enum Gender {
@@ -72,4 +73,25 @@ model Currency {
   name_plural     String
   type            String
   rate            Float
+}
+
+model SavingsTransitions {
+  id             String       @id @default(uuid())
+  transitionID   String
+  transitionType TransitionTypeRole @default(DEPOSIT)
+  data           String
+  hour           String
+  platform       String
+  amount         Int
+  currencyType   String
+  createdById    String
+  isActive       Boolean
+  description    String
+  createdBy      User         @relation("CreatedBy", fields: [createdById], references: [id])
+}
+
+enum TransitionTypeRole {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
 }
