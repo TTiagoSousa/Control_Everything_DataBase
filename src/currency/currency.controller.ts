@@ -18,6 +18,8 @@ export class CurrencyController {
   }
 
   @Post('update-currencies-rate')
+  @UseGuards(JwtAuthGuard, EmployeeRolesGuard)
+  @Roles(EmployeeRole.ADMIN)
   async updateCurrenciesRate() {
     const updateCurrenciesRate = await this.currencyService.updateCurrenciesRate();
     return { updateCurrenciesRate };
