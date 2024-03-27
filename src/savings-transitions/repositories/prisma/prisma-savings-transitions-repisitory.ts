@@ -13,15 +13,13 @@ export class PrismaSavingsTransitionsRepository implements SavingsTransitionRepo
   }
 
   async countByUserId(userId: string): Promise<number> {
-    try {
+   
       const count = await prisma.savingsTransitions.count({
         where: {
           createdById: userId,
         },
       });
       return count;
-    } catch (error) {
-      throw new Error(`Failed to count saving transitions for user: ${error.message}`);
-    }
+
   }
 }

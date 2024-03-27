@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Req, Get, Param } from '@nestjs/common';
 import { SavingsTransitionsService } from './savings-transitions.service';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { createSavingTransition_dto } from './dto/create.savings.transition.dto';
@@ -15,4 +15,9 @@ export class SavingsTransitionsController {
     return this.savingsTransitionsService.CreateSavingTransition(dto, userId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/total-of-saving-transitions')
+  async getTotalTransitionsByUserId(@Param('userId') userId: string) {
+    return this.savingsTransitionsService.getTotalTransitionsByUserId(userId);
+  }
 }
