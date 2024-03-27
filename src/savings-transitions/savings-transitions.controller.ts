@@ -20,4 +20,18 @@ export class SavingsTransitionsController {
   async getTotalTransitionsByUserId(@Param('userId') userId: string) {
     return this.savingsTransitionsService.getTotalTransitionsByUserId(userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/get-total-converted/:targetCurrencyPair')
+  async getTotalConverted(
+    @Param('userId') userId: string,
+    @Param('targetCurrencyPair') targetCurrencyPair: string,
+  ) {
+
+    const baseCurrency = 'USD';
+
+    const totalConverted = await this.savingsTransitionsService.getTotalConverted(userId, baseCurrency, targetCurrencyPair);
+
+    return totalConverted 
+  }
 }

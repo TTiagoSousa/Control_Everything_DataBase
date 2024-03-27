@@ -14,12 +14,22 @@ export class PrismaSavingsTransitionsRepository implements SavingsTransitionRepo
 
   async countByUserId(userId: string): Promise<number> {
    
-      const count = await prisma.savingsTransitions.count({
-        where: {
-          createdById: userId,
-        },
-      });
-      return count;
+    const count = await prisma.savingsTransitions.count({
+      where: {
+        createdById: userId,
+      },
+    });
+    return count;
+  }
 
+  async findMany(userId: string): Promise<SavingsTransitions[]> {
+    const totalByCurrencyType = await prisma.savingsTransitions.findMany({
+      where: {
+        createdById: userId,
+        isActive: true,
+      },
+    })
+
+    return totalByCurrencyType
   }
 }
