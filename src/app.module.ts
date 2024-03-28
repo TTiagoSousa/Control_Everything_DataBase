@@ -8,9 +8,10 @@ import { CountriesModule } from './countries/countries.module';
 import { EmailModule } from './email/email.module';
 import { CurrencyModule } from './currency/currency.module';
 import { SavingsTransitionsModule } from './savings-transitions/savings-transitions.module';
+import { CryptoAnalysisModule } from './crypto-analysis/crypto-analysis.module';
 
 @Module({
-  imports: [AuthModule, UserModule, EmployeeModule, CountriesModule, EmailModule, CurrencyModule, SavingsTransitionsModule],
+  imports: [AuthModule, UserModule, EmployeeModule, CountriesModule, EmailModule, CurrencyModule, SavingsTransitionsModule, CryptoAnalysisModule],
   controllers: [AppController],
   providers: [AppService],
 })
