@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id                String                  @id @unique @default(uuid())
+  isActive          Boolean                 @default(false)
+  createdAt         DateTime                @default(now())
+  fullName          String
+  email             String                  @unique
+  hashedPassword    String
+  dateOfBirth       DateTime
+  employeeNumber    Int                     @unique
+  jobTitle          EmployeeRole            @default(NOT_ASSIGNED)
+  countryId         String                  
+  country           Countries               @relation(fields: [countryId], references: [id])          
+  gender            Gender                  @default(unknown)
+}
+
+enum Gender {
+  male
+  female
+  other
+  unknown
+}
+
+enum EmployeeRole {
+  ADMIN
+  PROGRAMMER
+  CUSTOMER_SUPPORT
+  NOT_ASSIGNED
+}
+
+model Countries {
+  id                    String          @id @unique @default(uuid())
+  countryNamePt         String          @unique 
+  countryNameEn         String          @unique  
+  CoutryFlag            String
+  employees             Employee[]
+}
