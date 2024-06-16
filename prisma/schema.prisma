@@ -7,6 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                String                  @id @unique @default(uuid())
+  isActive          Boolean                 @default(false)
+  createdAt         DateTime                @default(now())
+  fullName          String
+  countryId         String                  
+  country           Countries               @relation(fields: [countryId], references: [id])          
+  email             String                  @unique
+  hashedPassword    String
+  dateOfBirth       DateTime
+  isPaidUser        Boolean                 @default(false)
+  gender            Gender                  @default(unknown)
+  role              UserRole                @default(paid)
+}
+
+
 model Employee {
   id                String                  @id @unique @default(uuid())
   isActive          Boolean                 @default(false)
@@ -41,5 +57,11 @@ model Countries {
   countryNamePt         String          @unique 
   countryNameEn         String          @unique  
   CoutryFlag            String
+  users                 User[]
   employees             Employee[]
+}
+
+enum UserRole {
+  notPaid
+  paid
 }
