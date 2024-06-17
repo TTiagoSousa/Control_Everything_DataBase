@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { getCountriesFromApi } from './api/get.countries.from.api';
+import { getCountriesFromApi } from './helpers/api/get.countries.from.api';
+import { uploadCountriesToDataBase } from './helpers/upload.countries.to.database';
 
 @Injectable()
 export class CountriesService {
@@ -9,4 +10,8 @@ export class CountriesService {
     return result
   }
 
+  async uploadCountriesToDataBase() {
+    const result = await uploadCountriesToDataBase();
+    return result
+  }
 }

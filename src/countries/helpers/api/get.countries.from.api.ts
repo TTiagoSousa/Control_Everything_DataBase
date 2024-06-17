@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function getCountriesFromApi() {
 
-  const apiUrl: string = process.env.Countrieds_Api;
+  const apiUrl: string = process.env.Countries_Api;
 
   if (!apiUrl) {
     throw new BadRequestException("API URL is not defined in the environment variables.")
