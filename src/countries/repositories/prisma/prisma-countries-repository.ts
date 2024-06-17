@@ -12,4 +12,13 @@ export class PrismaCountriesRepository implements CoutriesRepository{
     return countries
   }
 
+  async findCountryByID(id:string){
+    const country = await prisma.countries.findUnique({
+      where:{
+        id
+      }
+    })
+
+    return country;
+  }
 }

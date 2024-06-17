@@ -1,7 +1,13 @@
 import { BadRequestException } from "@nestjs/common";
 import { Gender } from "@prisma/client";
 import { PrismaCountriesRepository } from "src/countries/repositories/prisma/prisma-countries-repository";
+import { signup_dto } from "src/user/dto/sing.up.user.dto";
 import { PrismaUsersRepository } from "src/user/repositories/prisma/prisma-user-repisitory";
+import { isValidEmail } from "src/utils/email/is.valide.email";
+import { hashPassword } from "src/utils/password/hashPassword";
+import { isStrongPassword } from "src/utils/password/is.password.strong";
+import { containsOnlyLetters } from "src/utils/text/contains.only.letters";
+import { containsOnlyLettersNumbersAndHyphens } from "src/utils/text/contains.only.letters.numbers.and.hyphens";
 
 export async function signupUser(
   dto: signup_dto,
@@ -9,6 +15,50 @@ export async function signupUser(
 
   const usersRepository = new PrismaUsersRepository();
   const countryRepository = new PrismaCountriesRepository();
+
+  const { email, password, fullName, confirmPassword, dateOfBirth, country, gender } = dto;
+
+  if (!isValidEmail(email)) {
+    throw new BadRequestException('Invalid email')
+  }
+
+  const foundUser = await usersRepository.findUserByEmail(email);
+  if (foundUser) {
+    throw new BadRequestException('Email already exists')
+  }
+
+  if (!containsOnlyLetters(fullName)) {
+    throw new BadRequestException('The name can only contain letters')
+  }
+
+  if (!containsOnlyLettersNumbersAndHyphens(country)) {
+    throw new BadRequestException('Invalid country')
+  }
+
+  const countryId = await countryRepository.findCountryByID(country);
+  if (!countryId) {
+    throw new BadRequestException('Invalid country');
+  }
+
+  const capitalizedFullName = fullName
+  .split(' ')
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(' ');
+
+  if (password !== confirmPassword) {
+    throw new BadRequestException('Passwords do not match')
+  }
+
+  if (!isStrongPassword(password)) {
+    throw new BadRequestException('Password Weak')
+  }
+
+  const dateOfBirthObj = new Date(dateOfBirth);
+  if (isNaN(dateOfBirthObj.getTime())) {
+    throw new BadRequestException('Invalid date of birth');
+  }
+
+  const hashedPassword = await hashPassword(password);
 
   const creationResult = await usersRepository.create({
     email: email,
