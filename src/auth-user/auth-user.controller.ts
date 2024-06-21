@@ -11,4 +11,12 @@ export class AuthUserController {
 
     return this.authUserService.signupUser(dto);
   }
+
+  @Post('send-email-to-reset-password-user')
+  async sendResetPasswordEmailToUser(@Body('email') email: string) {
+
+   await this.authUserService.sendResetPasswordEmail(email)
+
+    return;
+  }
 }

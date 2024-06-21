@@ -3,6 +3,7 @@ import { signupUser } from './helpers/sign.up.user';
 import { signup_dto } from 'src/user/dto/sing.up.user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/email/email.service';
+import { sendResetPasswordEmail } from './helpers/email/send.reset.password.email';
 
 @Injectable()
 export class AuthUserService {
@@ -16,4 +17,8 @@ export class AuthUserService {
     return result;
   }
 
+  async sendResetPasswordEmail(email: string) {
+    const result  = await sendResetPasswordEmail(email, this.emailService, this.jwt);
+    return result;
+  }
 }
