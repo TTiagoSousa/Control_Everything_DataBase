@@ -7,6 +7,7 @@ import { sendResetPasswordEmail } from './helpers/email/send.reset.password.emai
 import { signin_user_dto } from 'src/user/dto/sign.in.user.dto';
 import { signinUser } from './helpers/sign.in.user';
 import { resetPasswordUser } from './helpers/reset.password.user';
+import { activeUserAccount } from './helpers/active.user.account';
 
 @Injectable()
 export class AuthUserService {
@@ -32,6 +33,11 @@ export class AuthUserService {
 
   async resetPasswordUser( newPassword: string, token: string) {
     const result  = await resetPasswordUser(this.jwt, newPassword, token);
+    return result;
+  }
+
+  async activeUserAccount(token: string) {
+    const result = await activeUserAccount(this.jwt, token);
     return result;
   }
 }

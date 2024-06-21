@@ -32,4 +32,12 @@ export class AuthUserController {
     await this.authUserService.resetPasswordUser(token, newPassword);
     return { message: 'Password reset successfully' };
   }
+
+  @Patch('activate-user/:token')
+  async activeUserAccount(@Param('token') token: string) {
+
+    await this.authUserService.activeUserAccount(token);
+
+    return
+  }
 }
