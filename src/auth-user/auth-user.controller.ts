@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res, Req } from '@nestjs/common';
+import { Body, Controller, Post, Res, Req, Patch, Param } from '@nestjs/common';
 import { AuthUserService } from './auth-user.service';
 import { signup_dto } from 'src/user/dto/sing.up.user.dto';
 import { signin_user_dto } from 'src/user/dto/sign.in.user.dto';
@@ -25,5 +25,11 @@ export class AuthUserController {
   async signinUser(@Body() dto: signin_user_dto, @Req() req, @Res() res) {
 
     return this.authUserService.signinUser(dto, req, res);
+  }
+
+  @Patch('reset-password-user/:token')
+  async resetPassword(@Param('token') token: string, @Body('newPassword') newPassword: string) {
+    await this.authUserService.resetPasswordUser(token, newPassword);
+    return { message: 'Password reset successfully' };
   }
 }
