@@ -4,6 +4,8 @@ import { signup_dto } from 'src/user/dto/sing.up.user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/email/email.service';
 import { sendResetPasswordEmail } from './helpers/email/send.reset.password.email';
+import { signin_user_dto } from 'src/user/dto/sign.in.user.dto';
+import { signinUser } from './helpers/sign.in.user';
 
 @Injectable()
 export class AuthUserService {
@@ -21,4 +23,10 @@ export class AuthUserService {
     const result  = await sendResetPasswordEmail(email, this.emailService, this.jwt);
     return result;
   }
+
+  async signinUser(dto: signin_user_dto, req, res) {
+    const result = await signinUser(dto, this.jwt, req, res);
+    return result;
+  }
+
 }
