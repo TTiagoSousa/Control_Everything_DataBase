@@ -67,14 +67,14 @@ enum UserRole {
 }
 
 model Currency {
-  id              String   @id @default(uuid())
-  code            String   @unique
-  symbol          String
-  name            String
-  symbol_native   String
-  decimal_digits  Int
-  rounding        Int
-  name_plural     String
-  type            String
-  rate            Float
+  id                    String   @id @default(uuid())
+  name                  String   @unique
+  short_code            String   @unique
+  code                  Int
+  precision             Int
+  subunit               Int
+  symbol                String
+  symbol_first          Boolean
+  decimal_mark          String
+  thousands_separator   String
 }
