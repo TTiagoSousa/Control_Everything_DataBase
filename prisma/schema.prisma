@@ -70,11 +70,12 @@ model Currency {
   id                    String   @id @default(uuid())
   name                  String   @unique
   short_code            String   @unique
-  code                  Int
+  code                  String
   precision             Int
   subunit               Int
   symbol                String
   symbol_first          Boolean
   decimal_mark          String
   thousands_separator   String
+  rate                  Float
 }
