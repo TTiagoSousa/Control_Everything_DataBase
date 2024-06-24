@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { uploadCurrenciesToDatabase } from './helpers/upload.currencies.to.database';
 import { updateCurrenciesRate } from './helpers/update.currencies.rate';
 
@@ -14,4 +14,10 @@ export class CurrencyService {
     const result = await updateCurrenciesRate();
     return result;
   }
+
+  async updateCurrenciesRateTimer() {
+    const result = await updateCurrenciesRate();
+    return result;
+  }
+
 }
