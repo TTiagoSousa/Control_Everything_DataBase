@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { uploadCurrenciesToDatabase } from './helpers/upload.currencies.to.database';
+import { updateCurrenciesRate } from './helpers/update.currencies.rate';
 
 @Injectable()
 export class CurrencyService {
@@ -9,4 +10,8 @@ export class CurrencyService {
     return result;
   }
 
+  async updateCurrenciesRate() {
+    const result = await updateCurrenciesRate();
+    return result;
+  }
 }

@@ -12,4 +12,33 @@ export class PrismaCurrencyRepository implements CurrencyRepository{
 
     return currency
   }
+
+  async findByCode(short_code: string) {
+    const currencyID = await prisma.currency.findUnique({
+      where: {
+        short_code
+      },
+    });
+
+    return currencyID;
+  }
+
+  async findAll(){
+    const currencies = await prisma.currency.findMany();
+
+    return currencies;
+  }
+
+  async updateRate(short_code: string, rate: number) {
+    const updatedCurrency = await prisma.currency.update({
+      where: {
+        short_code,
+      },
+      data: {
+        rate,
+      },
+    });
+
+    return updatedCurrency;
+  }
 }
