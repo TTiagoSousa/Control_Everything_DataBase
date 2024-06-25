@@ -8,9 +8,10 @@ import { EmailModule } from './email/email.module';
 import { AuthEmployeeModule } from './auth-employee/auth-employee.module';
 import { EmployeeModule } from './employee/employee.module';
 import { CurrencyModule } from './currency/currency.module';
+import { PlatformsModule } from './platforms/platforms.module';
 
 @Module({
-  imports: [CountriesModule, UserModule, AuthUserModule, EmailModule, AuthEmployeeModule, EmployeeModule, CurrencyModule],
+  imports: [CountriesModule, UserModule, AuthUserModule, EmailModule, AuthEmployeeModule, EmployeeModule, CurrencyModule, PlatformsModule],
   controllers: [AppController],
   providers: [AppService],
 })
