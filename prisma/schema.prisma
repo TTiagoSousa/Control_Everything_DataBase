@@ -49,6 +49,7 @@ enum EmployeeRole {
   ADMIN
   PROGRAMMER
   CUSTOMER_SUPPORT
+  MANAGER
   NOT_ASSIGNED
 }
 
@@ -78,4 +79,26 @@ model Currency {
   decimal_mark          String
   thousands_separator   String
   rate                  Float
+}
+
+model Platform {
+  id                  String      @id @default(uuid())
+  name                String
+  image               String
+  type                PlatformType
+  website             String           @unique
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  status              PlatformStatus @default(ACTIVE)
+}
+
+enum PlatformStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PlatformType {
+  Bank
+  Crypto_Exchange
+  Crypto_Wallet
 }
