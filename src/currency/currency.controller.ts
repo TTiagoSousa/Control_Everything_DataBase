@@ -1,4 +1,4 @@
-import { Controller, Patch, Post } from '@nestjs/common';
+import { Controller, Get, Patch, Post } from '@nestjs/common';
 import { CurrencyService } from './currency.service';
 
 @Controller('currency')
@@ -15,5 +15,11 @@ export class CurrencyController {
   async updateCurrenciesRate() {
     const updatedCurrencies = await this.currencyService.updateCurrenciesRate();
     return { updatedCurrencies };
+  }
+
+  @Get('get-all-currencies')
+  async getAllCurrencies() {
+    const currencies = await this.currencyService.GetCurrencyFromDataBase();
+    return { currencies };
   }
 }

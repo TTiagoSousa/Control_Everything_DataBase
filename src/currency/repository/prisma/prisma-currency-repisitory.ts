@@ -41,4 +41,14 @@ export class PrismaCurrencyRepository implements CurrencyRepository{
 
     return updatedCurrency;
   }
+
+  async findByID(id: string) {
+    const currencyID = await prisma.currency.findUnique({
+      where: {
+        id
+      },
+    });
+
+    return currencyID;
+  }
 }

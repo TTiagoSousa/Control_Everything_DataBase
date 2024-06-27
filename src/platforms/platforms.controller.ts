@@ -10,4 +10,10 @@ export class PlatformsController {
 
     return this.platformsService.addNewPlatform(dto);
   }
+
+  @Get('get-all-platforms')
+  async GetPlatformsFromDataBase() {
+    const platforms = await this.platformsService.GetPlatformsFromDataBase();
+    return { platforms };
+  }
 }
