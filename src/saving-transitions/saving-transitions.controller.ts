@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Req, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Req, Body, Get, Param, Query, Delete } from '@nestjs/common';
 import { SavingTransitionsService } from './saving-transitions.service';
 import { JwtAuthGuard } from 'src/auth-user/jwt.guard';
 import { Request } from 'express';
@@ -13,5 +13,39 @@ export class SavingTransitionsController {
   async createSavingTransition(@Req() req: Request, @Body() dto: createSavingTransition_dto) {
     const userId = req.user['id'];
     return this.savingTransitionsService.createSavingTransition(dto, userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/get-total-number-of-savings-transitions')
+  async getTotalNumberOfSavingTransitions(@Param('userId') userId: string) {
+    return this.savingTransitionsService.getTotalNumberOfSavingTransitions(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/get-savings-transactions')
+  async getSavingTransitionsByUserId(
+    @Param('userId') userId: string,
+    @Query('perPage') perPage?: number,
+    @Query('page') page?: number,
+  ) {
+    return this.savingTransitionsService.getAllSavingsTransitionsWithPagination(userId, perPage, page);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':userId/:transitionId/disable-savings-transition')
+  async disableSavingTransition(
+    @Param('userId') userId: string,
+    @Param('transitionId') transitionId: string,
+  ) {
+    return this.savingTransitionsService.disableSavingTransition(userId, transitionId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':userId/:transitionId/enable-savings-transition')
+  async enableSavingTransition(
+    @Param('userId') userId: string,
+    @Param('transitionId') transitionId: string,
+  ) {
+    return this.savingTransitionsService.enableSavingTransition(userId, transitionId);
   }
 }
