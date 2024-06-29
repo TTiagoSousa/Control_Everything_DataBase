@@ -22,4 +22,17 @@ export class PrismaUsersRepository implements UsersRepository{
 
     return user;
   }
+
+  async save(data: Prisma.UserUpdateInput){
+    const id = data.id?.toString();
+    
+    const user = await prisma.user.update({
+        where: {
+            id
+        },
+        data,
+    });
+
+    return user;
+  }
 }

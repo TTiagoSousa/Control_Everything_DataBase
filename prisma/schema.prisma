@@ -20,6 +20,7 @@ model User {
   isPaidUser        Boolean                 @default(false)
   gender            Gender                  @default(unknown)
   role              UserRole                @default(paid)
+  savingTransitions SavingTransition[]      @relation("createdByUser")
 }
 
 
@@ -49,6 +50,7 @@ enum EmployeeRole {
   ADMIN
   PROGRAMMER
   CUSTOMER_SUPPORT
+  MANAGER
   NOT_ASSIGNED
 }
 
@@ -64,4 +66,62 @@ model Countries {
 enum UserRole {
   notPaid
   paid
+}
+
+model Currency {
+  id                    String   @id @default(uuid())
+  name                  String   @unique
+  short_code            String   @unique
+  code                  String
+  precision             Int
+  subunit               Int
+  symbol                String
+  symbol_first          Boolean
+  decimal_mark          String
+  thousands_separator   String
+  rate                  Float
+  savingTransition   SavingTransition[]
+}
+
+model Platform {
+  id                  String      @id @default(uuid())
+  name                String
+  image               String
+  type                PlatformType
+  website             String           @unique
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  status              PlatformStatus @default(ACTIVE)
+  savingTransition    SavingTransition[]
+}
+
+enum PlatformStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PlatformType {
+  Bank
+  Crypto_Exchange
+  Crypto_Wallet
+}
+
+model SavingTransition {
+  id                    String          @id @default(uuid())
+  transitionType        TransitionType
+  platformID            String
+  platform              Platform        @relation(fields: [platformID], references: [id])
+  amount                Float
+  currencyTypeID        String
+  isActive              Boolean         @default(true)
+  date                  DateTime        @default(now())
+  createdBy             User            @relation("createdByUser", fields: [createdById], references: [id])
+  createdById           String
+  currency              Currency        @relation(fields: [currencyTypeID], references: [id])
+  description           String?
+}
+
+enum TransitionType {
+  DEPOSIT
+  WITHDRAWAL
 }

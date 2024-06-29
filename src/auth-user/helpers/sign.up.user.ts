@@ -35,7 +35,7 @@ export async function signupUser(
   }
 
   if (!containsOnlyLetters(fullName)) {
-    throw new BadRequestException('The name can only contain letters')
+    throw new BadRequestException('The full name can only contain letters only')
   }
 
   if (!containsOnlyLettersNumbersAndHyphens(country)) {

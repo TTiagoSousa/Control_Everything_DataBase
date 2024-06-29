@@ -21,4 +21,10 @@ export class PrismaCountriesRepository implements CoutriesRepository{
 
     return country;
   }
+
+  async findAll(){
+    const country = await prisma.countries.findMany();
+
+    return country;
+  }
 }
