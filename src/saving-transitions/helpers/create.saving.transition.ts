@@ -45,7 +45,7 @@ export async function createSavingTransition(
   }
 
   const platform = await PlatformRepository.findPlatformByID(platformID)
-  if (!platformID) {
+  if (!platform) {
     throw new BadGatewayException('Invalid platform');
   }
 
