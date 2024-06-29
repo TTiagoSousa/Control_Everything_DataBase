@@ -6,6 +6,7 @@ import { getAllSavingsTransitionsWithPagination } from './helpers/get.all.saving
 import { enableSavingTransition } from './helpers/enable.saving.transition';
 import { disableSavingTransition } from './helpers/disable.saving.transition';
 import { getTotalCurrencyPerPlatform } from './helpers/get.total.currency.per.platform';
+import { getTotalOnSavingsTransitionsConverted } from './helpers/get.total.on.savings.converted';
 
 @Injectable()
 export class SavingTransitionsService {
@@ -39,6 +40,11 @@ export class SavingTransitionsService {
 
   async getTotalPerCurrency(userId: string) {
     const result = await getTotalCurrencyPerPlatform(userId);
+    return result;
+  }
+
+  async getTotalOnSavingsTransitionsConverted(userId: string, targetConvertion:string) {
+    const result = await getTotalOnSavingsTransitionsConverted(userId, targetConvertion);
     return result;
   }
 }

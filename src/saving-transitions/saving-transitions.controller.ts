@@ -54,4 +54,13 @@ export class SavingTransitionsController {
   async getTotalPerCurrency(@Param('userId') userId: string) {
     return this.savingTransitionsService.getTotalPerCurrency(userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/get-total-on-savings-converted/:targetConvertion')
+  async getTotalOnSavingsTransitionsConverted(
+    @Param('userId') userId: string,
+    @Param('targetConvertion') targetConvertion: string,
+  ) {
+    return this.savingTransitionsService.getTotalOnSavingsTransitionsConverted(userId, targetConvertion);
+  }
 }
