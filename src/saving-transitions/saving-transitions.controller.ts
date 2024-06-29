@@ -48,4 +48,10 @@ export class SavingTransitionsController {
   ) {
     return this.savingTransitionsService.enableSavingTransition(userId, transitionId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/get-total-per-currency-and-platform')
+  async getTotalPerCurrency(@Param('userId') userId: string) {
+    return this.savingTransitionsService.getTotalPerCurrency(userId);
+  }
 }
